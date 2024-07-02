@@ -1,7 +1,16 @@
 substitutions:
+  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long.
   name: "athom-presence-sensor"
-  friendly_name: "presence sensor"
+  # This is the friendly name that can also contain uppercase letters, spaces and other characters.
+  friendly_name: "Presence Sensor"
+  # Allows this device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc.
   room: ""
+  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
+  dns_domain: ""
+  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
+  timezone: ""
+  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken.
+  wifi_fast_connect: "false" 
   device_description: "mmwave radar human presence sensor"
   project_name: "Athom Technology.Presence Sensor"
   project_version: "1.0.1"
@@ -257,8 +266,13 @@ number:
       - switch.turn_on: mmwave_sensor
 
 button:
+  - platform: !extend factory_reset
+    internal: true
+
   - platform: template
-    id: !extend factory_reset_device
+    name: Factory Reset
+    id: factory_reset_device
+    entity_category: config
     on_press:
       - switch.turn_off: mmwave_sensor
       - delay: 500ms
