@@ -40,6 +40,22 @@ binary_sensor:
     name: "Status"
     entity_category: diagnostic    
 
+button:
+  - platform: factory_reset
+    name: Factory Reset
+    id: Reset
+    entity_category: config
+
+  - platform: restart
+    name: Restart Device
+    id: Restart
+    entity_category: config
+
+  - platform: safe_mode
+    name: "Safe Mode"
+    id: Safe_mode
+    entity_category: config
+
 sensor:
   - platform: uptime
     name: "Uptime Sensor"
@@ -62,22 +78,6 @@ sensor:
       - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
     unit_of_measurement: "%"
     entity_category: diagnostic
-
-button:
-  - platform: factory_reset
-    name: Factory Reset
-    id: Reset
-    entity_category: config
-
-  - platform: restart
-    name: Restart Device
-    id: Restart
-    entity_category: config
-
-  - platform: safe_mode
-    name: "Safe Mode"
-    id: Safe_mode
-    entity_category: config
 
 text_sensor:
   - platform: wifi_info
