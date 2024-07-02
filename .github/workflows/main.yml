@@ -32,8 +32,8 @@ jobs:
 #          - sw03
 #          - sw04
           - cb02
-#          - ls-4p-3wire
-#          - ls-4p-4wire
+          - ls-4p-3wire
+          - ls-4p-4wire
           - presence-sensor
     steps:
       - name: Checkout source
