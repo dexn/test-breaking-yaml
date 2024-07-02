@@ -1,8 +1,9 @@
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
+  area: ${room}
   name_add_mac_suffix: true
-  min_version: 2024.6.0
+  min_version:  ${min_esphome_version}
   project:
     name: ${project_name}
     version: ${project_version}
@@ -32,6 +33,10 @@ wifi:
   ap: {}
 
 captive_portal:
+
+binary_sensor:
+  - platform: status
+    name: "Status"
 
 sensor:
   - platform: uptime
