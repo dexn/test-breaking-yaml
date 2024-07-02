@@ -50,18 +50,24 @@ sensor:
 
 button:
   - platform: factory_reset
-    name: Factory Reset
+    name: Reset
     id: factory_reset
-    entity_category: config
-
-  - platform: restart
-    name: Restart_esp
-    id: restart_esp
     entity_category: config
     internal: true
 
   - platform: template
-    name: Restart device
+    name: Factory Reset
+    id: factory_reset_device
+    entity_category: config
+
+  - platform: restart
+    name: Restart
+    id: restart
+    entity_category: config
+    internal: true
+
+  - platform: template
+    name: Restart Device
     id: restart_device
     entity_category: config
 
