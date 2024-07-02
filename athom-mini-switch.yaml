@@ -20,7 +20,10 @@ esphome:
   min_version: 2024.6.0
 
 dashboard_import:
-  package_import_url: github://athom-tech/athom-configs/athom-mini-switch.yaml
+  package_import_url: github://dexn/test-breaking-yaml/athom-mini-switch.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
 
 binary_sensor:
   # Wired switch
