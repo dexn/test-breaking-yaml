@@ -1,0 +1,42 @@
+substitutions:
+  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long.
+  name: "athom-relay-board-x1"
+  # This is the friendly name that can also contain uppercase letters, spaces and other characters.
+  friendly_name: "Relay Board X1"
+  # Allows ESP device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc
+  room: ""
+  relay_restore_mode: RESTORE_DEFAULT_OFF
+  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
+  dns_domain: ""
+  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
+  timezone: ""
+  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
+  wifi_fast_connect: "false" 
+  device_description: "Relay Board X1"
+  project_name: "Athom Technology.Relay-Board-X1"
+  project_version: "1.0.1"
+
+esphome:
+  min_version: 2024.6.0
+
+dashboard_import:
+  package_import_url: github://dexn/test-breaking-yaml/athom-relay-board-x1.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
+
+light:
+  - platform: status_led
+    name: "Status LED"
+    disabled_by_default: true
+    pin:
+      inverted: true
+      number: GPIO16
+
+switch:
+  # Relay
+  - platform: gpio
+    name: "Relay"
+    pin: GPIO5
+    id: relay1
+    restore_mode: ${relay_restore_mode}
