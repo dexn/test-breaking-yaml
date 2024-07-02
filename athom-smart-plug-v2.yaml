@@ -61,6 +61,15 @@ binary_sensor:
         then:
           - button.press: Reset
 
+light:
+  - platform: status_led
+    name: "Status LED"
+    id: blue_led
+    disabled_by_default: true
+    pin:
+      inverted: true
+      number: GPIO13
+
 sensor:
   - platform: cse7766
     current:
@@ -139,12 +148,3 @@ switch:
     pin: GPIO12
     id: relay
     restore_mode: ${relay_restore_mode}
-
-light:
-  - platform: status_led
-    name: "Status LED"
-    id: blue_led
-    disabled_by_default: true
-    pin:
-      inverted: true
-      number: GPIO13
