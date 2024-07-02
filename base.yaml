@@ -65,25 +65,13 @@ sensor:
 
 button:
   - platform: factory_reset
-    name: Reset
-    id: Reset
-    entity_category: config
-    internal: true
-
-  - platform: template
     name: Factory Reset
-    id: factory_reset_device
+    id: Reset
     entity_category: config
 
   - platform: restart
-    name: Restart
-    id: Restart
-    entity_category: config
-    internal: true
-
-  - platform: template
     name: Restart Device
-    id: restart_device
+    id: Restart
     entity_category: config
 
   - platform: safe_mode
