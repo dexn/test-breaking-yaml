@@ -266,7 +266,8 @@ number:
       - switch.turn_on: mmwave_sensor
 
 button:
-  - platform: !extend factory_reset
+  - platform: factory_reset
+    id: !extend factory_reset
     internal: true
 
   - platform: template
