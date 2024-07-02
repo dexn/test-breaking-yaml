@@ -266,14 +266,8 @@ number:
       - switch.turn_on: mmwave_sensor
 
 button:
-  - platform: factory_reset
-    id: !extend factory_reset
-    internal: true
-
   - platform: template
-    name: Factory Reset
-    id: factory_reset_device
-    entity_category: config
+    id: !extend factory_reset_device
     on_press:
       - switch.turn_off: mmwave_sensor
       - delay: 500ms
@@ -283,16 +277,16 @@ button:
       - button.press: Reset
 
   - platform: template
+    id: !extend restart_device
+    on_press:
+      - button.press: restart_mmwave
+      - delay: 1s
+      - button.press: restart_esp
+
+  - platform: template
     name: Restart_mmWave
     id: restart_mmwave
     entity_category: config
     internal: true
     on_press:
       - uart.write: "resetSystem\r\n"
-
-  - platform: template
-    id: !extend restart_device
-    on_press:
-      - button.press: restart_mmwave
-      - delay: 1s
-      - button.press: restart_esp
