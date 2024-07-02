@@ -23,7 +23,7 @@ jobs:
 #          - relay-board-x4
 #          - relay-board-x8
 #          - smart-plug
-#          - smart-plug-v2
+          - smart-plug-v2
 #          - wall-outlet
 #          - sw01
 #          - sw01-v2
