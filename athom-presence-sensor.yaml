@@ -1,5 +1,5 @@
 substitutions:
-  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long.
+  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long
   name: "athom-presence-sensor"
   # This is the friendly name that can also contain uppercase letters, spaces and other characters.
   friendly_name: "Presence Sensor"
