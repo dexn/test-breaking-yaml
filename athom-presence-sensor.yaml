@@ -24,14 +24,6 @@ dashboard_import:
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
 
-light:
-  - platform: status_led
-    name: "Status LED"
-    id: led
-    pin: GPIO16
-    disabled_by_default: true
-    entity_category: config
-
 i2c:
   sda: GPIO4
   scl: GPIO5
@@ -102,24 +94,53 @@ binary_sensor:
         return id(occupancy).state;
       }
 
-sensor:
-  - platform: bh1750
-    name: "Light Sensor"
-    address: 0x23
-    update_interval: 5s
-
-switch:
-  - platform: template
-    name: "mmWave Status"
-    id: "mmwave_sensor"
+button:
+  - platform: factory_reset
+    id: !extend Reset
+    name: Reset
     internal: true
+
+  - platform: template
+    name: Factory Reset
+    id: factory_reset_device
     entity_category: config
-    optimistic: true
-    restore_mode: DISABLED
-    turn_on_action:
-      - uart.write: "sensorStart\r\n"
-    turn_off_action:
-      - uart.write: "sensorStop\r\n"
+    on_press:
+      - switch.turn_off: mmwave_sensor
+      - delay: 500ms
+      - uart.write: "resetCfg\r\n"
+      - delay: 1s
+      - switch.turn_on: mmwave_sensor
+      - button.press: Reset
+
+  - platform: restart
+    id: !extend Restart
+    name: Restart
+    internal: true
+
+  - platform: template
+    name: Restart Device
+    id: restart_device
+    entity_category: config
+    on_press:
+      - button.press: restart_mmwave
+      - delay: 1s
+      - button.press: Restart
+
+  - platform: template
+    name: Restart_mmWave
+    id: restart_mmwave
+    entity_category: config
+    internal: true
+    on_press:
+      - uart.write: "resetSystem\r\n"
+
+light:
+  - platform: status_led
+    name: "Status LED"
+    id: led
+    pin: GPIO16
+    disabled_by_default: true
+    entity_category: config
 
 number:
   - platform: template
@@ -258,42 +279,21 @@ number:
       - delay: 500ms
       - switch.turn_on: mmwave_sensor
 
-button:
-  - platform: factory_reset
-    id: !extend Reset
-    name: Reset
-    internal: true
+sensor:
+  - platform: bh1750
+    name: "Light Sensor"
+    address: 0x23
+    update_interval: 5s
 
+switch:
   - platform: template
-    name: Factory Reset
-    id: factory_reset_device
-    entity_category: config
-    on_press:
-      - switch.turn_off: mmwave_sensor
-      - delay: 500ms
-      - uart.write: "resetCfg\r\n"
-      - delay: 1s
-      - switch.turn_on: mmwave_sensor
-      - button.press: Reset
-
-  - platform: restart
-    id: !extend Restart
-    name: Restart
+    name: "mmWave Status"
+    id: "mmwave_sensor"
     internal: true
-
-  - platform: template
-    name: Restart Device
-    id: restart_device
     entity_category: config
-    on_press:
-      - button.press: restart_mmwave
-      - delay: 1s
-      - button.press: Restart
-
-  - platform: template
-    name: Restart_mmWave
-    id: restart_mmwave
-    entity_category: config
-    internal: true
-    on_press:
-      - uart.write: "resetSystem\r\n"
+    optimistic: true
+    restore_mode: DISABLED
+    turn_on_action:
+      - uart.write: "sensorStart\r\n"
+    turn_off_action:
+      - uart.write: "sensorStop\r\n"
