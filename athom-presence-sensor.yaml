@@ -7,10 +7,11 @@ substitutions:
   project_version: "1.0.1"
   min_esphome_version: "2024.6.0"
 
-esphome:
-
 dashboard_import:
   package_import_url: github://dexn/test-breaking-yaml/athom-presence-sensor.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
 
 light:
   - platform: status_led
