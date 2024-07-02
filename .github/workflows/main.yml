@@ -31,7 +31,7 @@ jobs:
 #          - sw02-v2
 #          - sw03
 #          - sw04
-#          - cb02
+          - cb02
 #          - ls-4p-3wire
 #          - ls-4p-4wire
           - presence-sensor
