@@ -1,0 +1,72 @@
+substitutions:
+  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long
+  name: "athom-rgbw-light"
+  # This is the friendly name that can also contain uppercase letters, spaces and other characters.
+  friendly_name: "RGBW Light Strip Controller"
+  # Allows this device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc.
+  room: ""
+  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
+  dns_domain: ""
+  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
+  timezone: ""
+  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken.
+  wifi_fast_connect: "false" 
+  light_restore_mode: RESTORE_DEFAULT_OFF
+  device_description: "High Power RGBW Light Strip Controller"
+  project_name: "Athom Technology.RGBW Light Strip Controller"
+  project_version: "1.1.1"
+
+esphome:
+  min_version: 2024.6.0
+
+dashboard_import:
+  package_import_url: github://dexn/test-breaking-yaml/athom-rgbw-light.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 0
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Power Button"
+    disabled_by_default: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - light.toggle: leds
+      - timing:
+          - ON for at least 4s
+        then:
+          - button.press: Reset
+
+light:
+  - platform: rgbw
+    name: "RGBW_Controller"
+    id: leds
+    red: output_red
+    green: output_green
+    blue: output_blue
+    white: output_white
+    color_interlock: true
+
+output:
+  - platform: esp8266_pwm
+    id: output_red
+    pin: GPIO4
+
+  - platform: esp8266_pwm
+    id: output_green
+    pin: GPIO12
+
+  - platform: esp8266_pwm
+    id: output_blue
+    pin: GPIO14
+
+  - platform: esp8266_pwm
+    id: output_white
+    pin: GPIO13
