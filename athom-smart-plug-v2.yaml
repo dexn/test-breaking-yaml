@@ -52,12 +52,12 @@ binary_sensor:
     disabled_by_default: true
     on_multi_click:
       - timing:
-        - ON for at most 1s
-        - OFF for at least 0.2s
+          - ON for at most 1s
+          - OFF for at least 0.2s
         then:
           - switch.toggle: relay
       - timing:
-        - ON for at least 4s
+          - ON for at least 4s
         then:
           - button.press: Reset
 
