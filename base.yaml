@@ -1,11 +1,11 @@
 esphome:
-  name: "${name}"
-  friendly_name: "${friendly_name}"
+  name: ${name}
+  friendly_name: ${friendly_name}
   name_add_mac_suffix: true
   min_version: 2024.6.0
   project:
-    name: "${project_name}"
-    version: "${project_version}"
+    name: ${project_name}
+    version: ${project_version}
 
 esp8266:
   board: esp8285
@@ -35,10 +35,10 @@ captive_portal:
 
 sensor:
   - platform: uptime
-    name: "Uptime Sensor"
+    name: Uptime Sensor
 
   - platform: wifi_signal
-    name: "WiFi Signal Sensor"
+    name: WiFi Signal Sensor
     update_interval: 60s
 
 button:
@@ -47,47 +47,31 @@ button:
     id: Reset
     entity_category: config
     internal: true
+
   - platform: template
-    name: "Reset device"
-    id: "factory_reset_device"
+    name: Reset device
+    id: factory_reset_device
     entity_category: config
-    on_press:
-      - switch.turn_off: mmwave_sensor
-      - delay: 500ms
-      - uart.write: "resetCfg\r\n"
-      - delay: 1s
-      - switch.turn_on: mmwave_sensor
-      - button.press: Reset
 
   - platform: restart
     name: Restart_esp
     id: restart_esp
     entity_category: config
     internal: true
-  - platform: template
-    name: "Restart_mmWave"
-    id: "restart_mmwave"
-    entity_category: config
-    internal: true
-    on_press:
-      - uart.write: "resetSystem\r\n"
 
   - platform: template
     name: Restart device
+    id: restart_device
     entity_category: config
-    on_press:
-      - button.press: restart_mmwave
-      - delay: 1s
-      - button.press: restart_esp
 
 text_sensor:
   - platform: wifi_info
     ip_address:
-      name: "IP Address"
+      name: IP Address
     ssid:
-      name: "Connected SSID"
+      name: Connected SSID
     mac_address:
-      name: "Mac Address"
+      name: Mac Address
 
 time:
   - platform: sntp
