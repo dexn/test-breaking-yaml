@@ -20,7 +20,7 @@ substitutions:
   # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
   wifi_fast_connect: "false" 
   device_description: "Relay Board X8"
-project_name: "Athom Technology.Relay-Board-X8"
+  project_name: "Athom Technology.Relay-Board-X8"
   project_version: "1.0.1"
 
 esphome:
