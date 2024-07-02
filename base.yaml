@@ -3,7 +3,6 @@ esphome:
   friendly_name: ${friendly_name}
   area: ${room}
   name_add_mac_suffix: true
-  min_version: ${min_esphome_version}
   project:
     name: ${project_name}
     version: ${project_version}
