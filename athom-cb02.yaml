@@ -1,0 +1,66 @@
+substitutions:
+  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long.
+  name: "athom-cb02-switch"
+  # This is the friendly name that can also contain uppercase letters, spaces and other characters.
+  friendly_name: "Basic Switch Module"
+  # Allows ESP device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc
+  room: ""
+  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
+  relay_restore_mode: RESTORE_DEFAULT_OFF
+  dns_domain: ""
+  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
+  timezone: ""
+  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
+  wifi_fast_connect: "false" 
+  device_description: "Athom Basic Switch Module"
+  project_name: "Athom Technology.Switch Module"
+  project_version: "1.1.1"
+
+esphome:
+  min_version: 2024.6.0
+
+dashboard_import:
+  package_import_url: github://dexn/test-breaking-yaml/athom-cb02.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 3
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Power Button"
+    disabled_by_default: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - switch.toggle: relay
+      - timing:
+          - ON for at least 4s
+        then:
+          - button.press: Reset
+
+light:
+  - platform: status_led
+    name: "Status LED"
+    id: blue_led
+    disabled_by_default: true
+    pin:
+      inverted: true
+      number: GPIO4
+
+switch:
+  - platform: gpio
+    name: "Relay"
+    pin: GPIO13
+    id: relay
+    restore_mode: ${relay_restore_mode}
+    on_turn_on:
+      - light.turn_on: blue_led
+
+    on_turn_off:
+      - light.turn_off: blue_led
