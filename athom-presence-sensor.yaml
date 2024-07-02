@@ -41,13 +41,6 @@ uart:
   tx_pin: GPIO15
   rx_pin: GPIO13
   baud_rate: 115200
-  # debug:
-  #   direction: BOTH
-  #   dummy_receiver: true
-  #   after:
-  #     delimiter: "\n"
-  #   sequence:
-  #     - lambda: UARTDebug::log_string(direction, bytes);
 
 binary_sensor:
   - platform: gpio
