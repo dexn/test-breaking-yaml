@@ -51,7 +51,7 @@ sensor:
 button:
   - platform: factory_reset
     name: Reset
-    id: factory_reset
+    id: reset
     entity_category: config
     internal: true
 
