@@ -51,9 +51,8 @@ sensor:
 button:
   - platform: factory_reset
     name: Factory Reset
-    id: Reset
+    id: factory_reset
     entity_category: config
-
 
   - platform: restart
     name: Restart_esp
