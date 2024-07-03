@@ -9,12 +9,6 @@ substitutions:
   relay2_restore_mode: RESTORE_DEFAULT_OFF
   relay3_restore_mode: RESTORE_DEFAULT_OFF
   relay4_restore_mode: RESTORE_DEFAULT_OFF
-  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
-  dns_domain: ""
-  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
-  timezone: ""
-  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
-  wifi_fast_connect: "false" 
   device_description: "Relay Board X4"
   project_name: "Athom Technology.Relay-Board-X4"
   project_version: "1.0.1"
