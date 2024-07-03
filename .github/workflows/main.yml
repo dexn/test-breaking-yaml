@@ -27,8 +27,8 @@ jobs:
           - rgbww-light
           - smart-plug-v2
           - smart-plug
-#          - sw01-v2
-#          - sw01
+          - sw01-v2
+          - sw01
 #          - sw02-v2
 #          - sw02
 #          - sw03
