@@ -27,6 +27,7 @@ dashboard_import:
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 binary_sensor:
   - platform: gpio
@@ -41,7 +42,7 @@ binary_sensor:
           - ON for at most 1s
           - OFF for at least 0.2s
         then:
-          - light.toggle: led
+          - light.toggle: Light
       - timing:
           - ON for at least 4s
         then:
@@ -54,7 +55,7 @@ light:
     red: red_output
     green: green_output
     blue: blue_output
-    id: led
+    id: Light
 
 output:
   - platform: esp8266_pwm
