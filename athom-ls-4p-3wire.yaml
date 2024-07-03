@@ -5,7 +5,7 @@ substitutions:
   friendly_name: "Addressable LED Strip Controller - 3 Wire"
   # Allows ESP device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc
   room: ""
-  led_restore_mode: RESTORE_DEFAULT_OFF
+  light_restore_mode: RESTORE_DEFAULT_OFF
   number_of_leds: '150'
   led_rgb_order: GRB
   led_chipset: WS2811
@@ -63,7 +63,7 @@ light:
     chipset: ${led_chipset}
     num_leds: ${number_of_leds}
     rgb_order: ${led_rgb_order}
-    restore_mode: ${led_restore_mode}
+    restore_mode: ${light_restore_mode}
     effects:
       - addressable_rainbow:
       - addressable_scan:
