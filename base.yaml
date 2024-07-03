@@ -1,3 +1,13 @@
+substitutions:
+  # Set the duration between the sntp service polling ntp.org servers for an update
+  sntp_update_interval: "6h"
+  # Network time servers for your region, enter from lowest to highest priority. To use local servers update as per zones or countries at: https://www.ntppool.org/zone/@
+  sntp_server_1: "0.pool.ntp.org"
+  sntp_server_2: "1.pool.ntp.org"
+  sntp_server_3: "2.pool.ntp.org"  
+  # Define logging level: NONE, ERROR, WARN, INFO, DEBUG (Default), VERBOSE, VERY_VERBOSE
+  log_level: "INFO"
+
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
@@ -17,6 +27,7 @@ preferences:
 
 # Enable logging
 logger:
+  level: ${log_level}
 
 api:
 
@@ -128,8 +139,13 @@ time:
     id: sntp_time
   # Define the timezone of the device
     timezone: "${timezone}"
-  # Change sync interval from default 5min to 6 hours
-    update_interval: 360min    
+  # Change sync interval from default 5min to 6 hours (or as set in substitutions)
+    update_interval: ${sntp_update_interval}
+  # Set specific sntp servers to use
+    servers: 
+      - "${sntp_server_1}"
+      - "${sntp_server_2}"
+      - "${sntp_server_3}"    
   # Publish the time the device was last restarted
     on_time_sync:
       then:
