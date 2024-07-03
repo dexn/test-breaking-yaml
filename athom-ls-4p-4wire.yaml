@@ -9,12 +9,6 @@ substitutions:
   number_of_leds: '150'
   led_rgb_order: GRB
   led_chipset: WS2801
-  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
-  dns_domain: ""
-  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
-  timezone: ""
-  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
-  wifi_fast_connect: "false" 
   device_description: "Addressable LED Strip Controller - 4 Wire"
   project_name: "Athom Technology.LS 4P 4Wire"
   project_version: "1.1.1"
