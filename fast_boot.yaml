@@ -3,6 +3,12 @@ esphome:
     then:
       - script.execute: fast_boot_script
 
+globals:
+  - id: fast_boot
+    type: int
+    restore_value: yes
+    initial_value: '0'
+
 script:
   - id: fast_boot_script
     then:
