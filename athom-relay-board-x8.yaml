@@ -31,10 +31,12 @@ dashboard_import:
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 light:
   - platform: status_led
     name: "Status LED"
+    id: Status_led
     disabled_by_default: true
     pin:
       inverted: true
