@@ -7,12 +7,6 @@ substitutions:
   room: ""
   light1_restore_mode: RESTORE_DEFAULT_OFF
   light2_restore_mode: RESTORE_DEFAULT_OFF
-    # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
-  dns_domain: ""
-  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
-  timezone: ""
-  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
-  wifi_fast_connect: "false" 
   device_description: "2 Gang Switch"
   project_name: "Athom Technology.2 Gang Switch"
   project_version: "1.1.1"
