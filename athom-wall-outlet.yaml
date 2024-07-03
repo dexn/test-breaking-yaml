@@ -1,0 +1,141 @@
+substitutions:
+  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long
+  name: "athom-wall-outlet"
+  # This is the friendly name that can also contain uppercase letters, spaces and other characters.
+  friendly_name: "Wall Outlet"
+  # Allows this device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc.
+  room: ""
+  relay_restore_mode: RESTORE_DEFAULT_OFF
+  sensor_update_interval: 10s
+  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
+  dns_domain: ""
+  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
+  timezone: ""
+  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken.
+  wifi_fast_connect: "false" 
+  device_description: "Wall Outlet"
+  project_name: "Athom Technology.Wall Outlet"
+  project_version: "1.1.1"
+
+esphome:
+  min_version: 2024.6.0
+
+logger:
+  baud_rate: 0
+
+dashboard_import:
+  package_import_url: github://athom-tech/athom-configs/athom-wall-outlet.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+
+globals:
+  - id: total_energy
+    type: float
+    restore_value: yes
+    initial_value: '0.0'
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 5
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Power Button"
+    disabled_by_default: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - switch.toggle: relay
+      - timing:
+          - ON for at least 4s
+        then:
+          - button.press: Reset
+
+light:
+  - platform: status_led
+    name: "Status LED"
+    id: Status_led
+    disabled_by_default: true
+    pin:
+      inverted: true
+      number: GPIO13
+
+sensor:
+  - platform: uptime
+    name: "Uptime Sensor"
+
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+    update_interval: 60s
+
+  - platform: cse7766
+    current:
+      name: "Current"
+      # filters:
+      #     - lambda: if (x < 0.060) return 0.0; else return x;   #For the chip will report less than 3w power when no load is connected
+
+    voltage:
+      name: "Voltage"
+      filters:
+        - throttle_average: ${sensor_update_interval}
+    power:
+      name: "Power"
+      id: power_sensor
+      filters:
+        - throttle_average: ${sensor_update_interval}
+      #  - lambda: if (x < 3.0) return 0.0; else return x;    #For the chip will report less than 3w power when no load is connected
+
+    energy:
+      name: "Energy"
+      id: energy
+      unit_of_measurement: kWh
+      filters:
+        # Multiplication factor from W to kW is 0.001
+        - multiply: 0.001
+        - throttle_average: ${sensor_update_interval}
+      on_value:
+        then:
+          - lambda: |-
+              static float previous_energy_value = 0.0;
+              float current_energy_value = id(energy).state;
+              id(total_energy) += current_energy_value - previous_energy_value;
+              previous_energy_value = current_energy_value;
+
+  - platform: template
+    name: "Total Energy"
+    unit_of_measurement: kWh
+    device_class: "energy"
+    state_class: "total_increasing"
+    icon: "mdi:lightning-bolt"
+    accuracy_decimals: 3
+    lambda: |-
+      return id(total_energy);
+    update_interval: ${sensor_update_interval}
+
+  - platform: total_daily_energy
+    name: "Total Daily Energy"
+    restore: true
+    power_id: power_sensor
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+switch:
+  - platform: gpio
+    name: "Wall Outlet"
+    pin: GPIO12
+    id: relay
+    restore_mode: ${relay_restore_mode}
+    on_turn_on:
+      - light.turn_on: Status_led
+    on_turn_off:
+      - light.turn_off: Status_led
