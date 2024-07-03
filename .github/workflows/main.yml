@@ -33,8 +33,8 @@ jobs:
           - sw02
           - sw03
           - sw04
-#          - wall-outlet
-#          - ws2812b
+          - wall-outlet
+          - ws2812b
     steps:
       - name: Checkout source
         uses: actions/checkout@v3.2.0
