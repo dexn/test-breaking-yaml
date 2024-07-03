@@ -19,10 +19,10 @@ logger:
   baud_rate: 0
 
 dashboard_import:
-  package_import_url: github://dexn/test-breaking-yaml/athom-sw03.yaml
+  package_import_url: github://athom-tech/athom-configs/athom-sw03.yaml
 
 packages:
-  base_package: github://dexn/test-breaking-yaml/base.yaml
+  base_package: github://athom-tech/athom-configs/base.yaml
 
 binary_sensor:
   # Touch Buttons
