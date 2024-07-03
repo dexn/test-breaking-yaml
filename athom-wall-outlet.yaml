@@ -18,7 +18,7 @@ logger:
   baud_rate: 0
 
 dashboard_import:
-  package_import_url: github://athom-tech/athom-configs/athom-wall-outlet.yaml
+  package_import_url: github://dexn/test-breaking-yaml/athom-wall-outlet.yaml
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
