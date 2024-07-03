@@ -17,9 +17,9 @@ substitutions:
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
+  comment: ${device_description}
   area: ${room}
   name_add_mac_suffix: true
-  comment: ${device_description}
   project:
     name: ${project_name}
     version: ${project_version}
