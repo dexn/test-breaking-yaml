@@ -31,7 +31,7 @@ dashboard_import:
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
-  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot_light.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 uart:
   rx_pin: RX
