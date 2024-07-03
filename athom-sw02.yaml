@@ -68,6 +68,7 @@ binary_sensor:
 light:
   - platform: status_led
     name: "Status LED"
+    id: Status_led
     disabled_by_default: true
     pin:
       number: GPIO0
