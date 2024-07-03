@@ -5,12 +5,6 @@ substitutions:
   friendly_name: "Presence Sensor"
   # Allows this device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc.
   room: ""
-  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
-  dns_domain: ""
-  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
-  timezone: ""
-  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken.
-  wifi_fast_connect: "false" 
   device_description: "mmWave Radar Human Presence Sensor"
   project_name: "Athom Technology.Presence Sensor"
   project_version: "1.0.1"
