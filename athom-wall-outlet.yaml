@@ -6,7 +6,7 @@ substitutions:
   # Allows this device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc.
   room: ""
   relay_restore_mode: RESTORE_DEFAULT_OFF
-  sensor_update_interval: 10s
+  sensor_update_interval: "10s"
   device_description: "Wall Outlet"
   project_name: "Athom Technology.Wall Outlet"
   project_version: "1.1.1"
