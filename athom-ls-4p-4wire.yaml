@@ -24,11 +24,11 @@ logger:
   baud_rate: 0
 
 dashboard_import:
-  package_import_url: github://dexn/test-breaking-yaml/athom-ls-4p-4wire.yaml
+  package_import_url: github://athom-tech/athom-configs/athom-ls-4p-4wire.yaml
 
 packages:
-  base_package: github://dexn/test-breaking-yaml/base.yaml
-  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot_light.yaml
+  base_package: github://athom-tech/athom-configs/base.yaml
+  fast_boot_package: github://athom-tech/athom-configs/fast_boot_light.yaml
 
 binary_sensor:
   - platform: gpio
