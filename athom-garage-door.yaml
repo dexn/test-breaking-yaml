@@ -23,6 +23,7 @@ dashboard_import:
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 binary_sensor:
   - platform: gpio
@@ -79,7 +80,7 @@ cover:
 light:
   - platform: status_led
     name: "Status LED"
-    id: wifi_led
+    id: Status_led
     disabled_by_default: true
     pin: GPIO12
 
@@ -90,7 +91,7 @@ switch:
     id: relay
     disabled_by_default: true
     on_turn_on:
-      - light.turn_on: wifi_led
+      - light.turn_on: Status_led
       - delay: 1s
       - switch.turn_off: relay
-      - light.turn_off: wifi_led
+      - light.turn_off: Status_led
