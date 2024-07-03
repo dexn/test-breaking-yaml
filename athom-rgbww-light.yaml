@@ -15,11 +15,11 @@ esphome:
   min_version: 2024.6.0
 
 dashboard_import:
-  package_import_url: github://dexn/test-breaking-yaml/athom-rgbww-light.yaml
+  package_import_url: github://athom-tech/athom-configs/athom-rgbww-light.yaml
 
 packages:
-  base_package: github://dexn/test-breaking-yaml/base.yaml
-  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot_light.yaml
+  base_package: github://athom-tech/athom-configs/base.yaml
+  fast_boot_package: github://athom-tech/athom-configs/fast_boot_light.yaml
 
 light:
   - platform: rgbww
