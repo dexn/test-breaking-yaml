@@ -24,6 +24,7 @@ dashboard_import:
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 binary_sensor:
   - platform: gpio
@@ -47,7 +48,7 @@ binary_sensor:
 light:
   - platform: status_led
     name: "Status LED"
-    id: blue_led
+    id: Status_led
     disabled_by_default: true
     pin:
       inverted: true
@@ -60,7 +61,6 @@ switch:
     id: relay
     restore_mode: ${relay_restore_mode}
     on_turn_on:
-      - light.turn_on: blue_led
-
+      - light.turn_on: Status_led
     on_turn_off:
-      - light.turn_off: blue_led
+      - light.turn_off: Status_led
