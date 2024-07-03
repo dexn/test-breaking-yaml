@@ -21,7 +21,7 @@ esphome:
   min_version: 2024.6.0
 
 dashboard_import:
-  package_import_url: github://athom-tech/athom-configs/athom-smart-plug.yaml
+  package_import_url: github://dexn/test-breaking-yaml/athom-smart-plug.yaml
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
