@@ -13,11 +13,11 @@ esphome:
   min_version: 2024.6.0
 
 dashboard_import:
-  package_import_url: github://dexn/test-breaking-yaml/athom-garage-door.yaml
+  package_import_url: github://athom-tech/athom-configs/athom-garage-door.yaml
 
 packages:
-  base_package: github://dexn/test-breaking-yaml/base.yaml
-  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
+  base_package: github://athom-tech/athom-configs/base.yaml
+  fast_boot_package: github://athom-tech/athom-configs/fast_boot.yaml
 
 binary_sensor:
   - platform: gpio
@@ -60,7 +60,7 @@ cover:
           condition:
             lambda: 'return !id(contact).state;'
           then:
-              - switch.turn_on: relay
+            - switch.turn_on: relay
     stop_action:
       - switch.turn_on: relay
     close_action:
