@@ -24,6 +24,7 @@ dashboard_import:
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 binary_sensor:
   # Wired switch
@@ -36,7 +37,7 @@ binary_sensor:
       mode: INPUT_PULLUP
     on_state:
       - light.toggle: mini_relay
-      - light.toggle: led
+      - light.toggle: Status_led
     on_multi_click:
       - timing:
           - ON for at most 0.5s
@@ -64,7 +65,7 @@ binary_sensor:
           - OFF for at least 0.2s
         then:
           - light.toggle: mini_relay
-          - light.toggle: led
+          - light.toggle: Status_led
       - timing:
           - ON for at least 4s
         then:
@@ -72,8 +73,8 @@ binary_sensor:
 
 light:
   - platform: status_led
-    id: led
-    name: "Blue LED"
+    id: Status_led
+    name: "Status LED"
     disabled_by_default: true
     pin:
       number: GPIO4
