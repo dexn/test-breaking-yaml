@@ -22,10 +22,10 @@ esphome:
 
 dashboard_import:
   package_import_url: github://dexn/test-breaking-yaml/athom-rgbct-light.yaml
-  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 light:
   - platform: rgbct
