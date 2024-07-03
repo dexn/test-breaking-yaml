@@ -1,0 +1,69 @@
+substitutions:
+  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long
+  name: "athom-ws2812b"
+  # This is the friendly name that can also contain uppercase letters, spaces and other characters.
+  friendly_name: "WS2812B Controller"
+  # Allows this device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc.
+  room: ""
+  light_restore_mode: RESTORE_DEFAULT_OFF
+  number_of_leds: '150'
+  led_rgb_order: GRB
+  led_chipset: WS2811
+  # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
+  dns_domain: ""
+  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
+  timezone: ""
+  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken.
+  wifi_fast_connect: "false" 
+  device_description: "WS2812B Controller"
+  project_name: "Athom Technology.WS2812B Controller"
+  project_version: "1.1.1"
+
+esphome:
+  min_version: 2024.6.0
+
+esp8266:
+  framework:
+    version: 2.7.4
+
+logger:
+  baud_rate: 0
+
+dashboard_import:
+  package_import_url: github://dexn/test-breaking-yaml/athom-ws2812b.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 0
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Power Button"
+    disabled_by_default: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - light.toggle: Light
+      - timing:
+          - ON for at least 4s
+        then:
+          - button.press: Reset
+
+light:
+  - platform: fastled_clockless
+    pin: GPIO1
+    id: Light
+    name: "WS2812B Controller"
+    chipset: ${led_chipset}
+    num_leds: ${number_of_leds}
+    rgb_order: ${led_rgb_order}
+    restore_mode: ${light_restore_mode}
+    effects:
+      - addressable_rainbow:
+      - addressable_scan:
