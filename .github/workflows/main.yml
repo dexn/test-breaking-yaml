@@ -21,10 +21,10 @@ jobs:
           - relay-board-x2
           - relay-board-x4
           - relay-board-x8
-#          - rgb-light
-#          - rgbct-light
+          - rgb-light
+          - rgbct-light
           - rgbw-light
-#          - rgbww-light
+          - rgbww-light
           - smart-plug-v2
 #          - smart-plug
 #          - sw01-v2
