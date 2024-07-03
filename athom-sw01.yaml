@@ -19,6 +19,9 @@ substitutions:
 esphome:
   min_version: 2024.6.0
 
+logger:
+  baud_rate: 0
+
 dashboard_import:
   package_import_url: github://dexn/test-breaking-yaml/athom-sw01.yaml
 
