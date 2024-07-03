@@ -31,6 +31,7 @@ dashboard_import:
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot_light.yaml
 
 uart:
   rx_pin: RX
@@ -64,7 +65,7 @@ binary_sensor:
 light:
   - platform: status_led
     name: "Status LED"
-    id: blue_led
+    id: Status_led
     disabled_by_default: true
     pin:
       inverted: true
