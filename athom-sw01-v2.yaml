@@ -1,0 +1,79 @@
+substitutions:
+  device_name: "athom-1gang-switch-v2"
+  project_name: "Athom Technology.1 Gang Switch V2"
+  project_version: "1.1.1"
+  light_restore_mode: RESTORE_DEFAULT_OFF
+
+esphome:
+  min_version: 2024.6.0
+
+logger:
+  baud_rate: 0
+
+dashboard_import:
+  package_import_url: github://dexn/test-breaking-yaml/athom-sw01-v2.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
+
+binary_sensor:
+  # Touch Button
+  - platform: gpio
+    pin:
+      inverted: true
+      number: GPIO3
+      mode:
+        input: true
+        pullup: true
+    name: "Button"
+    disabled_by_default: true
+    on_multi_click:
+      - timing:
+          - ON for at most 0.5s
+          - OFF for at least 0.2s
+        then:
+          - light.toggle: light1
+      - timing:
+          - ON for at least 4s
+        then:
+          - button.press: Reset
+
+light:
+  - platform: status_led
+    name: "Status LED"
+    id: Status_led
+    disabled_by_default: true
+    pin:
+      number: GPIO0
+      inverted: true
+
+  # Relay
+  - platform: binary
+    name: "Light"
+    id: light1
+    output: relay1
+    restore_mode: ${light_restore_mode}
+    on_turn_on:
+      - light.turn_on: led1
+    on_turn_off:
+      - light.turn_off: led1
+
+  # Button LED
+  - platform: monochromatic
+    name: "LED"
+    disabled_by_default: true
+    id: led1
+    output: button_led1
+    default_transition_length: 500ms
+
+output:
+  # Relay
+  - platform: gpio
+    pin: GPIO13
+    id: relay1
+
+  # Button LED (1.0 = Blue / 0.0 = Red)
+  - platform: esp8266_pwm
+    pin: GPIO16
+    inverted: true
+    id: button_led1
