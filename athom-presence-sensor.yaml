@@ -23,6 +23,7 @@ dashboard_import:
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
 
 i2c:
   sda: GPIO4
@@ -62,7 +63,7 @@ binary_sensor:
     device_class: motion
     on_press:
       then:
-        - light.turn_on: led
+        - light.turn_on: Status_led
 
   - platform: gpio
     pin:
@@ -77,7 +78,7 @@ binary_sensor:
     device_class: motion
     on_release:
       then:
-        - light.turn_off: led
+        - light.turn_off: Status_led
 
   - platform: template
     name: "Occupancy"
@@ -137,7 +138,7 @@ button:
 light:
   - platform: status_led
     name: "Status LED"
-    id: led
+    id: Status_led
     pin: GPIO16
     disabled_by_default: true
     entity_category: config
