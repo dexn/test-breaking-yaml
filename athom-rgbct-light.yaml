@@ -29,7 +29,7 @@ packages:
 
 light:
   - platform: rgbct
-    id: light
+    id: light_bulb
     name: "RGBCT_Bulb"
     restore_mode: ${light_restore_mode}
     red: red_output
