@@ -1,0 +1,129 @@
+substitutions:
+  # Can only contain lowercase a-z, 0-9 and hyphens. Can be at most 24 characters long.
+  name: "athom-2gang-switch"
+  # This is the friendly name that can also contain uppercase letters, spaces and other characters.
+  friendly_name: "2 Gang Switch"
+  # Allows ESP device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc
+  room: ""
+  light1_restore_mode: RESTORE_DEFAULT_OFF
+  light2_restore_mode: RESTORE_DEFAULT_OFF
+    # Define a domain for this device to use. i.e. iot.home.lan (so device will appear as name.iot.home.lan in DNS/DHCP logs).
+  dns_domain: ""
+  # Set timezone of the device. Useful if the device is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney").
+  timezone: ""
+  # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
+  wifi_fast_connect: "false" 
+  device_description: "2 Gang Switch"
+  project_name: "Athom Technology.2 Gang Switch"
+  project_version: "1.1.1"
+
+esphome:
+  min_version: 2024.6.0
+
+logger:
+  baud_rate: 0
+
+dashboard_import:
+  package_import_url: github://dexn/test-breaking-yaml/athom-sw02.yaml
+
+packages:
+  base_package: github://dexn/test-breaking-yaml/base.yaml
+
+binary_sensor:
+  # Touch Buttons
+  - platform: gpio
+    pin:
+      inverted: true
+      number: GPIO3
+      mode:
+        input: true
+        pullup: true
+    name: "Button1"
+    disabled_by_default: true
+    on_multi_click:
+      - timing:
+          - ON for at most 0.5s
+          - OFF for at least 0.2s
+        then:
+          - light.toggle: light1
+      - timing:
+          - ON for at least 4s
+        then:
+          - button.press: Reset
+
+  - platform: gpio
+    pin:
+      inverted: true
+      number: GPIO5
+      mode:
+        input: true
+        pullup: true
+    name: "Button2"
+    disabled_by_default: true
+    on_click:
+      max_length: 0.5s
+      then:
+        - light.toggle: light2
+
+light:
+  - platform: status_led
+    name: "Status LED"
+    disabled_by_default: true
+    pin:
+      number: GPIO0
+      inverted: true
+
+  # Relays
+  - platform: binary
+    name: "Light1"
+    id: light1
+    output: relay1
+    restore_mode: ${light1_restore_mode}
+    on_turn_on:
+      - light.turn_on: light3
+    on_turn_off:
+      - light.turn_off: light3
+
+  - platform: binary
+    name: "Light2"
+    id: light2
+    output: relay2
+    restore_mode: ${light2_restore_mode}
+    on_turn_on:
+      - light.turn_on: light4
+    on_turn_off:
+      - light.turn_off: light4
+
+  # Button LEDs
+  - platform: monochromatic
+    name: "LED1"
+    disabled_by_default: true
+    id: light3
+    output: led1
+    default_transition_length: 500ms
+
+  - platform: monochromatic
+    name: "LED2"
+    disabled_by_default: true
+    id: light4
+    output: led2
+    default_transition_length: 500ms
+
+output:
+  # Relays
+  - platform: gpio
+    pin: GPIO13
+    id: relay1
+  - platform: gpio
+    pin: GPIO4
+    id: relay2
+
+  # Button LEDs (1.0 = Blue / 0.0 = Red)
+  - platform: esp8266_pwm
+    pin: GPIO14
+    inverted: true
+    id: led1
+  - platform: esp8266_pwm
+    pin: GPIO1
+    inverted: true
+    id: led2
