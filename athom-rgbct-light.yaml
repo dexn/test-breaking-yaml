@@ -27,12 +27,6 @@ dashboard_import:
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml
 
-globals:
-  - id: fast_boot
-    type: int
-    restore_value: yes
-    initial_value: '0'
-
 light:
   - platform: rgbct
     id: rgbct_light
