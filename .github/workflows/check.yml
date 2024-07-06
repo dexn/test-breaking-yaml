@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Checkout source
       - uses: actions/checkout@v4.1.7
-      - uses: esphome/build-action@v3.1.0
+      - uses: esphome/build-action@v1.1.0
         id: esphome-build
         with:
           yaml_file: athom-${{ matrix.device }}.yaml
