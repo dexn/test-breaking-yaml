@@ -36,7 +36,6 @@ jobs:
           - wall-outlet
           - ws2812b
     steps:
-        name: Checkout source
       - uses: actions/checkout@v4.1.7
       - uses: esphome/build-action@v3.1.0
         id: esphome-build
