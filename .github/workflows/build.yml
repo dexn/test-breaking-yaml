@@ -42,8 +42,7 @@ jobs:
       - uses: esphome/build-action@v3.1.0
         id: esphome-build
         with:
-          yaml_file: ${{ matrix.file }}
-          version: ${{ inputs.esphome_version }}
+          yaml_file: athom-${{ matrix.device }}.yaml
       - run: |
           mkdir output
           mv "${{ steps.esphome-build.outputs.name }}" output/
