@@ -24,6 +24,7 @@ logger:
 
 dashboard_import:
   package_import_url: github://dexn/test-breaking-yaml/athom-smart-plug-v2.yaml@main
+  import_full_config: true
 
 packages:
   base_package: github://dexn/test-breaking-yaml/base.yaml@main
