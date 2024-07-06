@@ -23,11 +23,11 @@ logger:
   baud_rate: 0
 
 dashboard_import:
-  package_import_url: github://dexn/test-breaking-yaml/athom-smart-plug-v2.yaml
+  package_import_url: github://dexn/test-breaking-yaml/athom-smart-plug-v2.yaml@main
 
 packages:
-  base_package: github://dexn/test-breaking-yaml/base.yaml
-  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml
+  base_package: github://dexn/test-breaking-yaml/base.yaml@main
+  fast_boot_package: github://dexn/test-breaking-yaml/fast_boot.yaml@main
 
 # Dentra Components - Adds 'Platform - Energy Statistics'
 # https://github.com/dentra/esphome-components/tree/master/components/energy_statistics
