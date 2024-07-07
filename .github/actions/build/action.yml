@@ -10,7 +10,6 @@ runs:
     - name: Install Dependencies
       shell: bash
       run: |
-        sudo chown -R $(whoami) /github/home
         apt update
         apt install -y jq yq
 
