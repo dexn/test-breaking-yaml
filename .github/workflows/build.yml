@@ -1,88 +1,51 @@
-name: Build and Publish ESPHome firmware
+name: Build binaries
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
-    inputs:
-      files:
-        description: Comma-separated list of files to build.
-        required: true
-        type: string
-      name:
-        description: Name of the firmware to publish.
-        required: false
-        type: string
-        default: ESPHome
-      clean:
-        description: Remove deleted files from the build
-        required: false
-        type: boolean
-        default: true
-      manifest_filename:
-        description: Filename of the manifest to write.
-        required: false
-        type: string
-        default: manifest.json
-      esphome_version:
-        description: Version of ESPHome to build for.
-        required: false
-        type: string
-        default: latest
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    outputs:
-      files: ${{ steps.files-array.outputs.files }}
-    steps:
-      - id: files-array
-        run: |
-          files=$(echo "${{ inputs.files }}" | jq -Rcn 'inputs | . / ","')
-          echo ::set-output name=files::$files
-
   build:
-    name: Build ESPHome binary for ${{ matrix.file }}
-    needs: [prepare]
+    name: Build ${{ matrix.device }} - ${{ matrix.esphome }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        file: ${{ fromJson(needs.prepare.outputs.files) }}
-    outputs:
-      esphome-version: ${{ steps.esphome-build.outputs.esphome-version }}
+        device:
+          - rgb-light
+          - rgbww-light
+          - rgbct-light
+          - rgbw-light
+          - garage-door
+          - ws2812b
+          - mini-switch
+          - relay-board-x1
+          - relay-board-x2
+          - relay-board-x4
+          - relay-board-x8
+          - smart-plug
+          - smart-plug-v2
+          - wall-outlet
+          - sw01
+          - sw01-v2
+          - sw02
+          - sw02-v2
+          - sw03
+          - sw04
+          - cb02
+          - ls-4p-3wire
+          - ls-4p-4wire
+          - presence-sensor
+        esphome:
+          - latest
+          - beta
+          - dev
+
+    container: ghcr.io/esphome/esphome:${{ matrix.esphome }}
     steps:
-      - uses: actions/checkout@v4.1.7
-      - uses: esphome/build-action@v3.1.0
-        id: esphome-build
+      - name: Checkout source
+        uses: actions/checkout@v3.2.0
+      - uses: ./.github/actions/build
         with:
-          yaml_file: ${{ matrix.file }}
-          version: ${{ inputs.esphome_version }}
-      - run: |
-          mkdir output
-          mv "${{ steps.esphome-build.outputs.name }}" output/
-      - uses: actions/upload-artifact@v3.1.2
-        with:
-          name: ${{ inputs.name }}
-          path: output
-
-  publish:
-    name: Publish new firmware and website to GitHub Pages
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v4.1.7
-      - uses: actions/download-artifact@v3.0.2
-        with:
-          path: output
-          name: ${{ inputs.name }}
-
-      - name: Create single manifest.json
-        run: |
-          jq -s '{"name": "${{ inputs.name }}", "version": "${{ needs.build.outputs.esphome-version }}", "home_assistant_domain": "esphome", "new_install_skip_erase": false, "builds":.}' output/*/manifest.json > output/${{ inputs.manifest_filename }}
-
-      - run: /bin/bash -c "cp -R static/* output"
-
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.6.1
-        with:
-          branch: gh-pages
-          folder: output
-          clean: ${{ inputs.clean }}
+          device: ${{ matrix.device }}
