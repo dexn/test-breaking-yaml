@@ -41,7 +41,7 @@ runs:
           ./${{ steps.info.outputs.name }}--${{ steps.info.outputs.version }}.bin
 
     - name: Upload binary
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Athom Binaries (${{ steps.info.outputs.esphome_version }})
         path: ./${{ steps.info.outputs.name }}--${{ steps.info.outputs.version }}.bin
