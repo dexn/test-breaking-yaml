@@ -12,8 +12,7 @@ runs:
       run: |
         sudo chown -R $(whoami) /github/home
         apt update
-        apt install -y jq
-        pip3 install yq
+        apt install -y jq yq
 
     - name: Get info
       id: info
