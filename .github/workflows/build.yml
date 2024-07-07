@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build ${{ matrix.device }} - ${{ matrix.esphome }}
+    name: Build ${{ matrix.device }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -37,12 +37,8 @@ jobs:
 #          - sw04
 #          - wall-outlet
 #          - ws2812b
-        esphome:
-          - latest
-          - beta
-          - dev
 
-    container: ghcr.io/esphome/esphome:${{ matrix.esphome }}
+    container: ghcr.io/esphome/esphome:latest
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
